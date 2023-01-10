@@ -1,0 +1,29 @@
+services:
+    superset-db:
+        image: mysql:5.7
+        container_name: superset-mysql
+        restart: always
+        ports:
+            - '13306:3306'
+        volumes:
+            - /var/log/mysql:/var/log/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: 123456
+            MYSQL_DATABASE: dev
+            MYSQL_USER: nlp_dev
+            MYSQL_PASSWORD: 123456
+        networks:
+            - my_network
+    superset:
+        image: superset:dockerfile-built
+        depends_on:
+            - superset-db
+        ports:
+            - '8088:8088'
+        restart: always
+        networks:
+            - my_network
+networks:
+    my_network:
+        driver: bridge
+
