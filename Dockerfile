@@ -3,17 +3,14 @@ FROM apache/superset
 
 # 切换用户为root
 USER root
-# 安装mysql依赖
-
-
+# 安装依赖
 RUN pip install mysqlclient
 RUN pip install sqlalchemy-redshift
 RUN apt-get update && apt-get install vim -y
 
 
 # 创建环境变量文件
-COPY ./pythonpath/* /app/pythonpath
-# COPY ./images/logo.png /app/superset/static/assets/images/miracleplus-logo.png
+COPY ./script/* /app/
 
 
 # 切换回superset用户， 切回原因是superset命令只在这个用户里面可以用
